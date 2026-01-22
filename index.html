@@ -57,64 +57,80 @@
         <details>
           <summary>OS</summary>
           <details>
+            <summary>02 – Threads and Concurrency Control</summary>
+            <ul>
+              <li><a href="#">POSIX threads</a></li>
+              <li><a href="#">Synchronization</a></li>
+              <li><a href="#">Interrupts & Spin Locks</a></li>
+            </ul>
+          </details>
+          <details>
+            <summary>01 – Processes, Execution, and System Calls</summary>
+            <ul>
+              <li><a href="#">UNIX signals</a></li>
+              <li><a href="#">Linux System Calls</a></li>
+              <li><a href="#">Run queues and wait queues</a></li>
+            </ul>
+          </details>
+          <details>
             <summary>00 – OS Fundamentals & Big Picture</summary>
             <ul>
               <li>
-                <a href="notes/os/introduction-to-os-unix.html" target="_blank" rel="noopener noreferrer"
+                <a href="notes/os/introduction-to-os-unix.html"
                   >Introduction to OS/Unix</a
                 >
               </li>
               <li>
-                <a href="notes/os/linux-overview.html" target="_blank" rel="noopener noreferrer"
+                <a href="notes/os/linux-overview.html"
                   >Linux Overview</a
                 >
               </li>
             </ul>
           </details>
-          <details>
-            <summary>01 – Processes, Execution, and System Calls</summary>
-            <ul>
-              <li><a href="#">UNIX signals</a></li>
-              <li><a href="#">Linux System Calls</a></li>
-              <li><a href="#">Run queues and wait queues</a></li>
-            </ul>
-          </details>
-          <details>
-            <summary>02 – Threads and Concurrency Control</summary>
-            <ul>
-              <li><a href="#">POSIX threads</a></li>
-              <li><a href="#">Synchronization</a></li>
-              <li><a href="#">Interrupts & Spin Locks</a></li>
-            </ul>
-          </details>
-        </details>
-        <details>
-          <summary>System Programming</summary>
-          <details>
-            <summary>00 – OS Fundamentals & Big Picture</summary>
-            <ul>
-              <li><a href="#">Introduction to OS/Unix</a></li>
-              <li><a href="#">Linux Overview</a></li>
-            </ul>
-          </details>
-          <details>
-            <summary>01 – Processes, Execution, and System Calls</summary>
-            <ul>
-              <li><a href="#">UNIX signals</a></li>
-              <li><a href="#">Linux System Calls</a></li>
-              <li><a href="#">Run queues and wait queues</a></li>
-            </ul>
-          </details>
-          <details>
-            <summary>02 – Threads and Concurrency Control</summary>
-            <ul>
-              <li><a href="#">POSIX threads</a></li>
-              <li><a href="#">Synchronization</a></li>
-              <li><a href="#">Interrupts & Spin Locks</a></li>
-            </ul>
-          </details>
+
         </details>
       </section>
     </main>
+
+    <script>
+      (function () {
+        var storageKey = "notes-details-open";
+        var details = Array.prototype.slice.call(
+          document.querySelectorAll("#notes details")
+        );
+
+        function loadOpenState() {
+          var raw = window.localStorage.getItem(storageKey);
+          if (!raw) {
+            return;
+          }
+          try {
+            var openIndexes = JSON.parse(raw);
+            details.forEach(function (el, idx) {
+              el.open = openIndexes.indexOf(idx) !== -1;
+            });
+          } catch (err) {
+            window.localStorage.removeItem(storageKey);
+          }
+        }
+
+        function saveOpenState() {
+          var openIndexes = details
+            .map(function (el, idx) {
+              return el.open ? idx : null;
+            })
+            .filter(function (idx) {
+              return idx !== null;
+            });
+          window.localStorage.setItem(storageKey, JSON.stringify(openIndexes));
+        }
+
+        details.forEach(function (el) {
+          el.addEventListener("toggle", saveOpenState);
+        });
+
+        loadOpenState();
+      })();
+    </script>
   </body>
 </html>
