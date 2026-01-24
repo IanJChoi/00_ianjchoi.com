@@ -39,9 +39,6 @@ a {
 .terminal-link:hover,
 .terminal-link:focus-visible {
   color: #ffffff;
-  background: #000000;
-  outline: 1px solid rgba(0, 204, 0, 0.4);
-  outline-offset: 3px;
 }
 
 pre {
