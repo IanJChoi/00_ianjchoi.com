@@ -11,6 +11,38 @@ const welcomeOutput = [
   "+-----------------------------------------------------------------------+",
   ""
 ].join("\n");
+const aboutOutput = [
+  "",
+  "+-----------------------------------------------------------------------+",
+  "|                               About Me                                |",
+  "+-----------------------------------------------------------------------+",
+  "",
+  "Hi, I’m Ian J. Choi.",
+  "I’m a senior at Columbia University majoring in Computer Science with a minor in Mathematics.",
+  "",
+  "I built FYBCL (For Your Better College Life) — an app that helps students quickly check dining hall menus, library hours, campus events, etc, so they can spend less time clicking around and avoid walking all the way to the dining hall or library just to realize it’s closed.",
+  "",
+  "Technically, I’m deeply interested in low-level computing such as operating systems and system programming. I enjoy understanding how things actually work under the hood — memory, processes, I/O, latency — and I’m actively studying and building projects in this space.",
+  "",
+  "Before computers, there was swimming.",
+  "I’ve been swimming since I was 4, competed as a member of the South Korean national team, and later swam for a Division I team in college. These days, swimming is more of a passion than a profession, and I spend most of my training time on CrossFit and HYROX — still chasing performance, just in different arenas.",
+  "",
+  "I like building things, pushing limits, and staying curious — whether that’s in code, systems, or sport.",
+  "+-----------------------------------------------------------------------+",
+  "",
+].join("\n");
+const contactOutput = [
+  "",
+  "+-----------------------------------------------------------------------+",
+  "|                               Contact Me                              |",
+  "+-----------------------------------------------------------------------+",
+  "",
+  "Email: ic2561@columbia.edu",
+  "LinkedIn: linkedin.com/in/ianjchoi/",
+  "GitHub: github.com/ianjchoi-ai",
+  "+-----------------------------------------------------------------------+",
+  "",
+].join("\n");
 const lsOutput_home = [
   "total 283",
   'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
@@ -20,9 +52,8 @@ const lsOutput_home = [
 ].join("\n");
 const lsOutput_about = [
   "total 283",
-  'drwxr--r-- ian staff 3887 Jan 24 00:23 thought_process',
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 blog',
-  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+  '-rw-r--r-- ian staff 3887 Jan 24 00:23 about.txt',
+  '-rw-r--r-- ian staff 3887 Jan 24 00:23 contact.txt'
 ].join("\n");
 const lsOutput_thought_process = [
   "total 283",
@@ -31,10 +62,7 @@ const lsOutput_thought_process = [
   "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
 ].join("\n");
 const lsOutput_blog = [
-  "total 283",
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
-  'drwxr--r-- ian staff 3887 Jan 24 00:23 thought_process',
-  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+  "total 0"
 ].join("\n");
 
 const isEditableTarget = (target) => {
@@ -120,6 +148,12 @@ const runCommand = (command) => {
     }
   }
   if (currentDir === "about") {
+    if (normalized === "cat about.txt") {
+      return { output: aboutOutput, asHtml: false };
+    }
+    if (normalized === "cat contact.txt") {
+      return { output: contactOutput, asHtml: false };
+    }
     if (normalized === "ls -l") {
       return { output: lsOutput_about, asHtml: false };
     }
