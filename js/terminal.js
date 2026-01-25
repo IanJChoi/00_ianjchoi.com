@@ -1,5 +1,6 @@
 const terminal = document.getElementById("terminal");
-const promptText = "ian@ianjchoi.com ~ % ";
+const promptUser = "ian@ianjchoi.com";
+let currentDir = "~";
 let currentInput = "";
 const welcomeOutput = [
   "",
@@ -10,7 +11,7 @@ const welcomeOutput = [
   "+-----------------------------------------------------------------------+",
   ""
 ].join("\n");
-const lsOutputHtml = [
+const lsOutput_home = [
   "total 283",
   'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
   'drwxr--r-- ian staff 3887 Jan 24 00:23 thought_process',
@@ -61,12 +62,48 @@ const appendOutput = (output, asHtml = false) => {
 
 const runCommand = (command) => {
   const normalized = command.trim();
-  if (normalized === "cat welcome.txt") {
-    return { output: welcomeOutput, asHtml: false };
+
+  if (normalized === "cd ~" || normalized === "cd") {
+    currentDir = "~";
+    return { output: "", asHtml: false };
   }
-  if (normalized === "ls -l") {
-    return { output: lsOutputHtml, asHtml: false };
+  if (normalized === "cd .") {
+    return { output: "", asHtml: false };
   }
+
+  if (currentDir === "~") {
+    if (normalized === "cat welcome.txt") {
+      return { output: welcomeOutput, asHtml: false };
+    }
+    if (normalized === "ls -l") {
+      return { output: lsOutput_home, asHtml: false };
+    }
+    if (normalized === "cd about") {
+      currentDir = "about";
+      return { output: "", asHtml: false };
+    }
+    if (normalized === "cd thought_process") {
+      currentDir = "thought_process";
+      return { output: "", asHtml: false };
+    }
+    if (normalized === "cd blog") {
+      currentDir = "blog";
+      return { output: "", asHtml: false };
+    }
+  }
+
+  if (currentDir === "about") {
+
+  }
+
+  if (currentDir === "thought_process") {
+
+  }
+
+  if (currentDir === "blog") {
+
+  }
+
   if (normalized.length > 0) {
     return { output: `zsh: command not found: ${normalized}`, asHtml: false };
   }
@@ -86,6 +123,8 @@ const trimTrailingWhitespaceNodes = () => {
   }
 };
 
+const getPromptText = () => `${promptUser} ${currentDir} % `;
+
 const appendPrompt = () => {
   const existingCursor = terminal.querySelector(".terminal-cursor");
   if (existingCursor) {
@@ -96,7 +135,7 @@ const appendPrompt = () => {
 
   terminal.insertAdjacentHTML(
     "beforeend",
-    `\n${promptText}<span class="terminal-input"></span><span class="terminal-cursor">█</span>`
+    `\n${getPromptText()}<span class="terminal-input"></span><span class="terminal-cursor">█</span>`
   );
   terminal.scrollTop = terminal.scrollHeight;
   // Keep the page view pinned to the bottom as new lines are added.
@@ -145,4 +184,3 @@ const bootstrapInput = () => {
 };
 
 bootstrapInput();
-
