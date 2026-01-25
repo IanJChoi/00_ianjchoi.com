@@ -6,7 +6,7 @@ const welcomeOutput = [
   "+-----------------------------------------------------------------------+",
   "|                          Welcome to my site!                          |",
   "|      I’m Ian. This is my personal website styled like a terminal.     |",
-  "|      Feel free to explore. Hint: try the terminal commands below.     |",
+  "|        Feel free to explore. Hint: try cd, ls -l, cat command!        |",
   "+-----------------------------------------------------------------------+",
   ""
 ].join("\n");
