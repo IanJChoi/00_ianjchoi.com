@@ -6,6 +6,7 @@ let currentInput = "";
 const textCache = new Map();
 const welcomePath = "/outputs/home/welcome.txt";
 const aboutPath = "/outputs/about/about.txt";
+const contactPath = "/outputs/about/contact.txt";
 
 const loadTextFile = async (path) => {
   if (textCache.has(path)) {
@@ -29,19 +30,8 @@ const loadTextFile = async (path) => {
 
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
+const getContactOutput = () => loadTextFile(contactPath);
 
-const contactOutput = [
-  "",
-  "+-----------------------------------------------------------------------+",
-  "|                               Contact Me                              |",
-  "+-----------------------------------------------------------------------+",
-  "",
-  "Email: ic2561@columbia.edu",
-  "LinkedIn: linkedin.com/in/ianjchoi/",
-  "GitHub: github.com/ianjchoi-ai",
-  "+-----------------------------------------------------------------------+",
-  "",
-].join("\n");
 const lsOutput_home = [
   "total 283",
   'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
@@ -151,7 +141,7 @@ const runCommand = async (command) => {
       return { output: await getAboutOutput(), asHtml: false };
     }
     if (normalized === "cat contact.txt") {
-      return { output: contactOutput, asHtml: false };
+      return { output: await getContactOutput(), asHtml: false };
     }
     if (normalized === "ls -l") {
       return { output: lsOutput_about, asHtml: false };
