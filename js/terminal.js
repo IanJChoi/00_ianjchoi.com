@@ -18,6 +18,24 @@ const lsOutput_home = [
   'drw-r--r-- ian staff 3887 Jan 24 00:23 blog',
   "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
 ].join("\n");
+const lsOutput_about = [
+  "total 283",
+  'drwxr--r-- ian staff 3887 Jan 24 00:23 thought_process',
+  'drw-r--r-- ian staff 3887 Jan 24 00:23 blog',
+  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+].join("\n");
+const lsOutput_thought_process = [
+  "total 283",
+  'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
+  'drw-r--r-- ian staff 3887 Jan 24 00:23 blog',
+  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+].join("\n");
+const lsOutput_blog = [
+  "total 283",
+  'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
+  'drwxr--r-- ian staff 3887 Jan 24 00:23 thought_process',
+  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+].join("\n");
 
 const isEditableTarget = (target) => {
   if (!target) return false;
@@ -78,30 +96,64 @@ const runCommand = (command) => {
     if (normalized === "ls -l") {
       return { output: lsOutput_home, asHtml: false };
     }
-    if (normalized === "cd about") {
-      currentDir = "about";
-      return { output: "", asHtml: false };
-    }
-    if (normalized === "cd thought_process") {
-      currentDir = "thought_process";
-      return { output: "", asHtml: false };
-    }
-    if (normalized === "cd blog") {
-      currentDir = "blog";
-      return { output: "", asHtml: false };
+    if (normalized.startsWith("cd ")) {
+      if (normalized === "cd ..") {
+        currentDir = "~";
+        return { output: "", asHtml: false };
+      }
+      if (normalized === "cd about" || normalized === "cd about/") {
+        currentDir = "about";
+        return { output: "", asHtml: false };
+      }
+      if (normalized === "cd thought_process" || normalized === "cd thought_process/") {
+        currentDir = "thought_process";
+        return { output: "", asHtml: false };
+      }
+      if (normalized === "cd blog" || normalized === "cd blog/") {
+        currentDir = "blog";
+        return { output: "", asHtml: false };
+      }
+      if (normalized === "cd welcome.txt") {
+        return { output: `cd: not a directory: ${normalized.slice(3)}`, asHtml: false };
+      }
+      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
     }
   }
-
   if (currentDir === "about") {
-
+    if (normalized === "ls -l") {
+      return { output: lsOutput_about, asHtml: false };
+    }
+    if (normalized.startsWith("cd ")) {
+      if (normalized === "cd ..") {
+        currentDir = "~";
+        return { output: "", asHtml: false };
+      }
+      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
+    }
   }
-
   if (currentDir === "thought_process") {
-
+    if (normalized === "ls -l") {
+      return { output: lsOutput_thought_process, asHtml: false };
+    }
+    if (normalized.startsWith("cd ")) {
+      if (normalized === "cd ..") {
+        currentDir = "~";
+        return { output: "", asHtml: false };
+      }
+      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
+    }
   }
-
   if (currentDir === "blog") {
-
+    if (normalized === "ls -l") {
+      return { output: lsOutput_blog, asHtml: false };
+    }
+    if (normalized.startsWith("cd ")) {
+      if (normalized === "cd ..") {
+        currentDir = "~";
+        return { output: "", asHtml: false };
+      }
+      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
+    }
   }
 
   if (normalized.length > 0) {
