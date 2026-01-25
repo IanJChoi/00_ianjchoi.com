@@ -41,6 +41,18 @@ a {
   color: #ffffff;
 }
 
+.terminal-cursor {
+  display: inline-block;
+  margin-left: 4px;
+  animation: terminal-blink 1s steps(1, end) infinite;
+}
+
+@keyframes terminal-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 pre {
   margin: 0;
   line-height: 1.4;
