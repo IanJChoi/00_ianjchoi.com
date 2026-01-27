@@ -1,13 +1,13 @@
 
 +---------------------------------------------------------------------------------+
-|                   How does shell built-in command "cd" works?                   |
+|                              How does "cd" work?                               |
 +---------------------------------------------------------------------------------+
 
-Just now, I found myself wondering how something I use every day actually works. When I use a MacBook, I change directories in the terminal with the cd command all the time. But how is "cd" implemented? What really happens under the hood?
+Just now, I found myself wondering how something I use every day actually works. When I use a terminal, I change directories with the cd command all the time. But how is "cd" implemented? What really happens under the hood?
 I took a closer look.
 
-First, there is an important concept to clarify. The terminal itself only receives user input and displays output; it does not execute commands. Command execution is handled by a shell process, in this case, zsh.
-(I’ll cover how Terminal.app launches the zsh shell in a future post.)
+First, there is an important concept to clarify. The terminal itself only receives user input and displays output; it does not execute commands. Command execution is handled by a shell process, in this case, zsh (Z-Shell).
+(I’ll cover how Terminal.app launches the zsh in a future post.)
 
 Let’s say the user types the command "cd projects". The terminal captures the input and passes it to zsh. zsh then parses and executes the command, interacting with the kernel (XNU) when required.
 This post examines that process in detail—specifically, how zsh handles the command after receiving it.
@@ -17,7 +17,7 @@ The name zsh comes from “Z Shell”. The “Z” is often said to have been ch
 If this interpretation is incorrect, I would appreciate any clarification.
 +---------------------------------------------------------------------------------+
 
-The zsh source code is publicly available on GitHub at github.com/zsh-users/zsh. On a local MacBook, the zsh executable lives at /bin/zsh, but this file is a compiled executable binary thus cannot be read directly.
+The zsh source code is publicly available on GitHub at github.com/zsh-users/zsh. On a local MacBook, the zsh lives at /bin/zsh, but this file is a compiled executable binary thus cannot be read directly.
 
 +-----------------------------------code, zsh-------------------------------------+
 $ file /bin/zsh
@@ -31,7 +31,7 @@ $ file /bin/zsh
 The original C source code—before compilation—is available in here, github.com/zsh-users/zsh.
 Let’s dive into it.
 
-+-----------------------------------code, C-------------------------------------+
++------------------------------------code, C--------------------------------------+
 /* Src/builtin.c line 55 */
 BUILTIN("cd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_CD, "qsPL", NULL)
 

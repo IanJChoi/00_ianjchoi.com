@@ -8,6 +8,8 @@ const welcomePath = "/outputs/home/welcome.txt";
 const aboutPath = "/outputs/about/about.txt";
 const contactPath = "/outputs/about/contact.txt";
 
+const HowDoesCdWork = "/outputs/tech/HowDoesCdWork.txt";
+
 const loadTextFile = async (path) => {
   if (textCache.has(path)) {
     return textCache.get(path);
@@ -31,12 +33,12 @@ const loadTextFile = async (path) => {
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
 const getContactOutput = () => loadTextFile(contactPath);
+const getHowDoesCdWorkOutput = () => loadTextFile(HowDoesCdWork);
 
 const lsOutput_home = [
   "total 283",
   'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
   'drwxr--r-- ian staff 3887 Jan 24 00:23 tech',
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 blog',
   "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
 ].join("\n");
 const lsOutput_about = [
@@ -46,9 +48,7 @@ const lsOutput_about = [
 ].join("\n");
 const lsOutput_tech = [
   "total 0",
-].join("\n");
-const lsOutput_blog = [
-  "total 0"
+  '-rw-r--r-- ian staff 3887 Jan 24 00:23 HowDoes.txt',
 ].join("\n");
 
 const isEditableTarget = (target) => {
@@ -152,20 +152,11 @@ const runCommand = async (command) => {
     }
   }
   if (currentDir === "tech") {
+    if (normalized === "cat HowDoesCdWork.txt") {
+      return { output: await getHowDoesCdWorkOutput(), asHtml: false };
+    }
     if (normalized === "ls -l") {
       return { output: lsOutput_tech, asHtml: false };
-    }
-    if (normalized.startsWith("cd ")) {
-      if (normalized === "cd ..") {
-        currentDir = "~";
-        return { output: "", asHtml: false };
-      }
-      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
-    }
-  }
-  if (currentDir === "blog") {
-    if (normalized === "ls -l") {
-      return { output: lsOutput_blog, asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
       if (normalized === "cd ..") {
