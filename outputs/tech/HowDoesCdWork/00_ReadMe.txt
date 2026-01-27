@@ -22,5 +22,5 @@ command after receiving it.
 +-----------------------------------fun facts-------------------------------------+
 The name zsh comes from “Z Shell”. The “Z” is often said to have been chosen to 
 evoke the idea of a “final” or “ultimate” shell, since Z is the last letter of the 
-alphabet. If this interpretation is incorrect, I would appreciate any clarification.
+alphabet. If this is incorrect, I would appreciate any clarification.
 +---------------------------------------------------------------------------------+
