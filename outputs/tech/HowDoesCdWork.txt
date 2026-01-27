@@ -42,19 +42,19 @@ BUILTIN("cd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 
 /* Src/zsh.h line 1440 */
 struct builtin {
     struct hashnode node;
-    HandlerFunc handlerfunc;	/* pointer to function that executes this builtin     */
-    int minargs;		/* minimum number of arguments                        */
-    int maxargs;		/* maximum number of arguments, or -1 for no limit    */
-    int funcid;			/* xbins (see above) for overloaded handlerfuncs      */
-    char *optstr;		/* string of legal options (see execbuiltin())        */
-    char *defopts;		/* options set by default for overloaded handlerfuncs */
+    HandlerFunc handlerfunc;
+    int minargs;
+    int maxargs;
+    int funcid;
+    char *optstr;
+    char *defopts;
 };
 
 /* Src/zsh.h line 1226 */
 struct hashnode {
-    HashNode next;		/* next in hash chain */
-    char *nam;			/* hash key           */
-    int flags;			/* various flags      */
+    HashNode next;
+    char *nam;
+    int flags;
 };
 
 /* Src/zsh.h line 523 */
