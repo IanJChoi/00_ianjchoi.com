@@ -1,0 +1,107 @@
+
++---------------------------------------------------------------------------------+
+|                   How does shell built-in command "cd" works?                   |
++---------------------------------------------------------------------------------+
+
+Just now, I found myself wondering how something I use every day actually works. When I use a MacBook, I change directories in the terminal with the cd command all the time. But how is "cd" implemented? What really happens under the hood?
+I took a closer look.
+
+First, there is an important concept to clarify. The terminal itself only receives user input and displays output; it does not execute commands. Command execution is handled by a shell process, in this case, zsh.
+(I’ll cover how Terminal.app launches the zsh shell in a future post.)
+
+Let’s say the user types the command "cd projects". The terminal captures the input and passes it to zsh. zsh then parses and executes the command, interacting with the kernel (XNU) when required.
+This post examines that process in detail—specifically, how zsh handles the command after receiving it.
+
++-----------------------------------fun facts-------------------------------------+
+The name zsh comes from “Z Shell”. The “Z” is often said to have been chosen to evoke the idea of a “final” or “ultimate” shell, since Z is the last letter of the alphabet.
+If this interpretation is incorrect, I would appreciate any clarification.
++---------------------------------------------------------------------------------+
+
+The zsh source code is publicly available on GitHub at github.com/zsh-users/zsh. On a local MacBook, the zsh executable lives at /bin/zsh, but this file is a compiled executable binary thus cannot be read directly.
+
++-----------------------------------code, zsh-------------------------------------+
+$ file /bin/zsh
+/bin/zsh: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [arm64e:Mach-O 64-bit executable arm64e]
+/bin/zsh (for architecture x86_64):	Mach-O 64-bit executable x86_64
+/bin/zsh (for architecture arm64e):	Mach-O 64-bit executable arm64e
++---------------------------------------------------------------------------------+
+
+-> "Mach-O 64-bit executable x86_64" indicates a Mach-O executable compiled for Intel 64-bit architecture that the macOS kernel can load and execute directly via exec.
+
+The original C source code—before compilation—is available in here, github.com/zsh-users/zsh.
+Let’s dive into it.
+
++-----------------------------------code, C-------------------------------------+
+/* Src/builtin.c line 55 */
+BUILTIN("cd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_CD, "qsPL", NULL)
+
+/* Src/zsh.h line 1450-1451 */
+#define BUILTIN(name, flags, handler, min, max, funcid, optstr, defopts) \
+    { { NULL, name, flags }, handler, min, max, funcid, optstr, defopts }
+
+/* Src/zsh.h line 1440 */
+struct builtin {
+    struct hashnode node;
+    HandlerFunc handlerfunc;	/* pointer to function that executes this builtin     */
+    int minargs;		/* minimum number of arguments                        */
+    int maxargs;		/* maximum number of arguments, or -1 for no limit    */
+    int funcid;			/* xbins (see above) for overloaded handlerfuncs      */
+    char *optstr;		/* string of legal options (see execbuiltin())        */
+    char *defopts;		/* options set by default for overloaded handlerfuncs */
+};
+
+/* Src/zsh.h line 1226 */
+struct hashnode {
+    HashNode next;		/* next in hash chain */
+    char *nam;			/* hash key           */
+    int flags;			/* various flags      */
+};
+
+/* Src/zsh.h line 523 */
+typedef struct hashnode  *HashNode;
+
+/* Src/zsh.h line 1436 */
+typedef int (*HandlerFunc) (char *, char **, Options, int);
+
+/* Src/zsh.h line 537 */
+typedef struct options	 *Options;
+
+/* Src/zsh.h line 1416 */
+struct options {
+    unsigned char ind[MAX_OPS];
+    char **args;
+    int argscount, argsalloc;
+};
+
+/* Src/zsh.h line 1396 */
+#define MAX_OPS 128
++---------------------------------------------------------------------------------+
+
+
+
+
+
+
++---------------------------------------------------------------------------------+
+ * Copyright (c) 1992-1997 Paul Falstad
+ * All rights reserved.
+ *
+ * Permission is hereby granted, without written agreement and without
+ * license or royalty fees, to use, copy, modify, and distribute this
+ * software and to distribute modified versions of this software for any
+ * purpose, provided that the above copyright notice and the following
+ * two paragraphs appear in all copies of this software.
+ *
+ * In no event shall Paul Falstad or the Zsh Development Group be liable
+ * to any party for direct, indirect, special, incidental, or consequential
+ * damages arising out of the use of this software and its documentation,
+ * even if Paul Falstad and the Zsh Development Group have been advised of
+ * the possibility of such damage.
+ *
+ * Paul Falstad and the Zsh Development Group specifically disclaim any
+ * warranties, including, but not limited to, the implied warranties of
+ * merchantability and fitness for a particular purpose.  The software
+ * provided hereunder is on an "as is" basis, and Paul Falstad and the
+ * Zsh Development Group have no obligation to provide maintenance,
+ * support, updates, enhancements, or modifications.
+ +---------------------------------------------------------------------------------+

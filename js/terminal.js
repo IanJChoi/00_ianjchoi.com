@@ -45,10 +45,7 @@ const lsOutput_about = [
   '-rw-r--r-- ian staff 3887 Jan 24 00:23 contact.txt'
 ].join("\n");
 const lsOutput_tech = [
-  "total 283",
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 blog',
-  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+  "total 0",
 ].join("\n");
 const lsOutput_blog = [
   "total 0"
