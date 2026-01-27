@@ -11,11 +11,11 @@ On a local MacBook, the zsh lives at /bin/zsh, but this file is a compiled
 executable binary thus cannot be read directly.
 
 +-----------------------------------code, zsh-------------------------------------+
-|$ file /bin/zsh                                                                  |
-|/bin/zsh: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit exe|
-|cutable x86_64] [arm64e:Mach-O 64-bit executable arm64e]                         |
-|/bin/zsh (for architecture x86_64):	Mach-O 64-bit executable x86_64           |
-|/bin/zsh (for architecture arm64e):	Mach-O 64-bit executable arm64e           |
+$ file /bin/zsh                                                                  
+/bin/zsh: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit execu
+table x86_64] [arm64e:Mach-O 64-bit executable arm64e]                         
+/bin/zsh (for architecture x86_64):	Mach-O 64-bit executable x86_64           
+/bin/zsh (for architecture arm64e):	Mach-O 64-bit executable arm64e           
 +---------------------------------------------------------------------------------+
 -> "Mach-O 64-bit executable x86_64" indicates a Mach-O executable compiled for
     Intel 64-bit architecture that the macOS kernel can load and execute directly
@@ -38,8 +38,8 @@ static struct builtin builtins[] =
 }
 
 /* 
-We can see that BUILTIN(...) expands to a struct builtin, and it is defined as a 
-macro. We will look at the definition of struct builtin later.
+We can see that BUILTIN(...) expands to a `struct builtin`, and it is defined as a 
+macro. We will look at the definition of `struct builtin` later.
 For now, let’s see how the macros 
 	BUILTIN, BINF_SKIPINVALID, BINF_SKIPDASH, BINF_DASHDASHVALID, and BIN_CD 
 are defined.
@@ -87,8 +87,13 @@ Therefore, the final expansion becomes:
 +---------------------------------------------------------------------------------+
 
 2. struct builtin
-+---------------------------------------------------------------------------------+
-Since this is type struct builtin, let's check out how struct builtin is defined.
++------------------------------------code, C--------------------------------------+
+/*
+Since,
+    { { NULL, "cd", (1<<12) | (1<<14) | (1<<15) },
+      bin_cd, 0, 2, 10, "qsPL", NULL } 
+is type `struct builtin`, let's check out how `struct builtin` is defined.
+*/
 
 /* Src/zsh.h line 1440 */
 struct builtin {
@@ -101,33 +106,32 @@ struct builtin {
     char *defopts;
 };
 
-/* From this definition of struct builtin, we know that;
-{ NULL, "cd", (1<<12) | (1<<14) | (1<<15) } - type: struct hashnode, name: node
-bin_cd                                      - type: HandlerFunc, name: handlerfunc
-0                                           - type: int, name: minargs
-2                                           - type: int, name: maxargs
-10                                          - type: int, name: funcid
-"qsPL"                                      - type: char *, name: optstr
-NULL                                        - type: char *, name: defopts
+/* 
+From this definition of `struct builtin`, we know that;
+  { NULL, "cd", (1<<12) | (1<<14) | (1<<15) } 
+                        - type: struct hashnode, field: node
+  bin_cd                - type: HandlerFunc, field: handlerfunc
+  0                     - type: int, field: minargs
+  2                     - type: int, field: maxargs
+  10                    - type: int, field: funcid
+  "qsPL"                - type: char *, field: optstr
+  NULL                  - type: char *, field: defopts
+*/
 
-/* 정리하자면,
-1. BUILTIN("cd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_CD, "qsPL", NULL)
-converts to {{NULL, "cd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID}, bin_cd, 0, 2, BIN_CD, "qsPL", NULL}
-+ 다음을 고려하면,
+/*
+At this point, we still need to understand two things:
+  `struct hashnode` and `HandlerFunc`
 
-/* Src/zsh.h line 1469, 1471, 1472 */
-#define BINF_SKIPINVALID	(1<<12)
-#define BINF_SKIPDASH		(1<<14)
-#define BINF_DASHDASHVALID	(1<<15)
+We will examines `struct hashnode`:
+  { NULL, "cd", (1<<12) | (1<<14) | (1<<15) } 
+                        - type: struct hashnode, field: node
+and `HandlerFunc`:
+  bin_cd
+*/
++---------------------------------------------------------------------------------+
 
-/* Src/hashtable.h 44 */
-#define BIN_CD       10
-
-{ { NULL, "cd", (1<<12) | (1<<14) | (1<<15) }, bin_cd, 0, 2, 10, "qsPL", NULL }
-
-2. { NULL, "cd", (1<<12) | (1<<14) | (1<<15) } 얘를 먼저 보면
-type: struct hashnode, name node
-
+2. struct builtin - struct hashnode
++------------------------------------code, C--------------------------------------+
 /* Src/zsh.h line 1226 */
 struct hashnode {
     HashNode next;
@@ -135,30 +139,32 @@ struct hashnode {
     int flags;
 };
 
-NULL - type: HashNode, name: next
-"cd" - type: char *, name: nam
-(1<<12) | (1<<14) | (1<<15) - type: int, name: flags
-note that (1<<12) | (1<<14) | (1<<15) is 0000 0000 0000 0000 1101 0000 0000 0000
-
-{{NULL, "cd", 0000 0000 0000 0000 1101 0000 0000 0000}, bin_cd, 0, 2, 10, "qsPL", NULL}
-
-{NULL, "cd", 0000 0000 0000 0000 1101 0000 0000 0000} - type: struct hashnode, name: node
-    NULL - type: HashNode, name: next
-    "cd" - type: char *, name: nam
-    0000 0000 0000 0000 1101 0000 0000 0000 - type: int, name: flags
-handler(bin_cd)             - type: HandlerFunc, name: handlerfunc
-min(0)                 - type: int, name: minargs
-max(2)                 - type: int, name: maxargs
-funcid(10)              - type: int, name: funcid
-optstr("qsPL")              - type: char *, name: optstr
-defopts(NULL)             - type: char *, name: defopts
-
-
 /* Src/zsh.h line 523 */
 typedef struct hashnode  *HashNode;
 
+/*
+From this definitions, we know that:
+  NULL                        - type: HashNode(=struct hashnode *), field: next
+  "cd"                        - type: char *, field: nam
+  (1<<12) | (1<<14) | (1<<15) - type: int, field: flags
+*/
++---------------------------------------------------------------------------------+
+
+3. struct builtin - HandlerFunc
++------------------------------------code, C--------------------------------------+
 /* Src/zsh.h line 1436 */
 typedef int (*HandlerFunc) (char *, char **, Options, int);
+
+/*
+Therefore, `bin_cd` is a `HandlerFunc`, meaning it is a pointer to a function
+that takes the following arguments:
+
+    (char *, char **, Options, int)
+
+and returns an `int`.
+*/
+
+/* About `Options`, see below. */
 
 /* Src/zsh.h line 537 */
 typedef struct options	 *Options;
@@ -172,6 +178,11 @@ struct options {
 
 /* Src/zsh.h line 1396 */
 #define MAX_OPS 128
+
+/* 
+In the next post, we will examine how the function pointed to by `bin_cd`
+is actually implemented and how it executes the `cd` builtin.
+*/
 +---------------------------------------------------------------------------------+
 
 +---------------------------------------------------------------------------------+
