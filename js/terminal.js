@@ -250,6 +250,30 @@ const appendPrompt = () => {
   });
 };
 
+const createMobileInput = () => {
+  const input = document.createElement("textarea");
+  input.setAttribute("aria-label", "Terminal input");
+  input.autocapitalize = "none";
+  input.autocorrect = "off";
+  input.spellcheck = false;
+  input.inputMode = "text";
+  input.style.position = "fixed";
+  input.style.opacity = "0";
+  input.style.pointerEvents = "none";
+  input.style.height = "1px";
+  input.style.width = "1px";
+  input.style.left = "-1000px";
+  input.style.top = "-1000px";
+  document.body.appendChild(input);
+  return input;
+};
+
+const mobileInput = createMobileInput();
+
+const syncMobileInput = () => {
+  mobileInput.value = currentInput;
+};
+
 document.addEventListener("keydown", async (event) => {
   if (isEditableTarget(event.target)) {
     return;
@@ -278,6 +302,32 @@ document.addEventListener("keydown", async (event) => {
     event.preventDefault();
     currentInput += event.key;
     renderInput();
+  }
+});
+
+const focusMobileInput = () => {
+  syncMobileInput();
+  mobileInput.focus({ preventScroll: true });
+};
+
+terminal.addEventListener("pointerdown", () => {
+  focusMobileInput();
+});
+
+mobileInput.addEventListener("input", () => {
+  currentInput = mobileInput.value;
+  renderInput();
+});
+
+mobileInput.addEventListener("keydown", async (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const command = currentInput;
+    finalizeCurrentLine();
+    const { output, asHtml } = await runCommand(command);
+    appendOutput(output, asHtml);
+    appendPrompt();
+    mobileInput.value = "";
   }
 });
 
