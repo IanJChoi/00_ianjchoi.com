@@ -11,7 +11,11 @@ html, body {
 
 body {
   width: 50em;
+  min-width: 50em;
+  height: 100vh;
   margin: 0 auto;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 html {
@@ -58,4 +62,8 @@ pre {
   line-height: 1.4;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+#terminal {
+  min-height: 100%;
 }
