@@ -251,13 +251,17 @@ const appendPrompt = () => {
 };
 
 const createMobileInput = () => {
-  const input = document.createElement("input");
-  input.type = "text";
+  const input = document.createElement("div");
   input.setAttribute("aria-label", "Terminal input");
+  input.setAttribute("role", "textbox");
+  input.setAttribute("aria-multiline", "false");
+  input.contentEditable = "true";
   input.autocapitalize = "none";
   input.autocorrect = "off";
   input.spellcheck = false;
   input.inputMode = "text";
+  input.setAttribute("autocomplete", "off");
+  input.setAttribute("autofill", "off");
   input.style.position = "fixed";
   input.style.opacity = "0.01";
   input.style.pointerEvents = "auto";
@@ -273,7 +277,7 @@ const createMobileInput = () => {
 const mobileInput = createMobileInput();
 
 const syncMobileInput = () => {
-  mobileInput.value = currentInput;
+  mobileInput.textContent = currentInput;
 };
 
 document.addEventListener("keydown", async (event) => {
@@ -331,7 +335,7 @@ document.body.addEventListener("touchstart", focusMobileInput);
 document.body.addEventListener("click", focusMobileInput);
 
 mobileInput.addEventListener("input", () => {
-  currentInput = mobileInput.value;
+  currentInput = mobileInput.textContent || "";
   renderInput();
 });
 
@@ -343,7 +347,7 @@ mobileInput.addEventListener("keydown", async (event) => {
     const { output, asHtml } = await runCommand(command);
     appendOutput(output, asHtml);
     appendPrompt();
-    mobileInput.value = "";
+    mobileInput.textContent = "";
   }
 });
 
