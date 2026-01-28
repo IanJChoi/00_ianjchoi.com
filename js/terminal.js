@@ -326,9 +326,9 @@ const focusMobileInput = (event) => {
 
 terminal.setAttribute("tabindex", "0");
 
-terminal.addEventListener("pointerdown", focusMobileInput);
-terminal.addEventListener("touchstart", focusMobileInput);
-terminal.addEventListener("click", focusMobileInput);
+document.body.addEventListener("pointerdown", focusMobileInput);
+document.body.addEventListener("touchstart", focusMobileInput);
+document.body.addEventListener("click", focusMobileInput);
 
 mobileInput.addEventListener("input", () => {
   currentInput = mobileInput.value;
