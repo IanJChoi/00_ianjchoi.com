@@ -251,19 +251,20 @@ const appendPrompt = () => {
 };
 
 const createMobileInput = () => {
-  const input = document.createElement("textarea");
+  const input = document.createElement("input");
+  input.type = "text";
   input.setAttribute("aria-label", "Terminal input");
   input.autocapitalize = "none";
   input.autocorrect = "off";
   input.spellcheck = false;
   input.inputMode = "text";
-  input.style.position = "absolute";
-  input.style.opacity = "0";
-  input.style.pointerEvents = "none";
-  input.style.height = "1px";
-  input.style.width = "1px";
-  input.style.left = "0";
-  input.style.top = "0";
+  input.style.position = "fixed";
+  input.style.opacity = "0.01";
+  input.style.pointerEvents = "auto";
+  input.style.height = "2px";
+  input.style.width = "2px";
+  input.style.left = "0px";
+  input.style.top = "0px";
   input.style.fontSize = "16px";
   document.body.appendChild(input);
   return input;
@@ -306,17 +307,27 @@ document.addEventListener("keydown", async (event) => {
   }
 });
 
-const focusMobileInput = () => {
+const moveMobileInputToPoint = (point) => {
+  if (!point) return;
+  mobileInput.style.left = `${Math.max(0, Math.floor(point.clientX))}px`;
+  mobileInput.style.top = `${Math.max(0, Math.floor(point.clientY))}px`;
+};
+
+const focusMobileInput = (event) => {
+  if (event?.touches && event.touches[0]) {
+    moveMobileInputToPoint(event.touches[0]);
+  } else if (event?.clientX != null && event?.clientY != null) {
+    moveMobileInputToPoint(event);
+  }
   syncMobileInput();
-  setTimeout(() => {
-    mobileInput.focus({ preventScroll: true });
-  }, 0);
+  mobileInput.focus();
+  mobileInput.click();
 };
 
 terminal.setAttribute("tabindex", "0");
 
 terminal.addEventListener("pointerdown", focusMobileInput);
-terminal.addEventListener("touchstart", focusMobileInput, { passive: true });
+terminal.addEventListener("touchstart", focusMobileInput);
 terminal.addEventListener("click", focusMobileInput);
 
 mobileInput.addEventListener("input", () => {
