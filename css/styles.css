@@ -18,6 +18,13 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+body:focus,
+body:focus-visible,
+#terminal:focus,
+#terminal:focus-visible {
+  outline: none;
+}
+
 html {
   scrollbar-width: none;
 }
