@@ -257,13 +257,14 @@ const createMobileInput = () => {
   input.autocorrect = "off";
   input.spellcheck = false;
   input.inputMode = "text";
-  input.style.position = "fixed";
+  input.style.position = "absolute";
   input.style.opacity = "0";
   input.style.pointerEvents = "none";
   input.style.height = "1px";
   input.style.width = "1px";
-  input.style.left = "-1000px";
-  input.style.top = "-1000px";
+  input.style.left = "0";
+  input.style.top = "0";
+  input.style.fontSize = "16px";
   document.body.appendChild(input);
   return input;
 };
@@ -307,12 +308,16 @@ document.addEventListener("keydown", async (event) => {
 
 const focusMobileInput = () => {
   syncMobileInput();
-  mobileInput.focus({ preventScroll: true });
+  setTimeout(() => {
+    mobileInput.focus({ preventScroll: true });
+  }, 0);
 };
 
-terminal.addEventListener("pointerdown", () => {
-  focusMobileInput();
-});
+terminal.setAttribute("tabindex", "0");
+
+terminal.addEventListener("pointerdown", focusMobileInput);
+terminal.addEventListener("touchstart", focusMobileInput, { passive: true });
+terminal.addEventListener("click", focusMobileInput);
 
 mobileInput.addEventListener("input", () => {
   currentInput = mobileInput.value;
