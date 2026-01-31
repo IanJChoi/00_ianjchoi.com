@@ -11,6 +11,8 @@ const contactPath = "/outputs/about/contact.txt";
 const HDCDW_00 = "/outputs/tech/HowDoesCdWork/00_ReadMe.txt";
 const HDCDW_01 = "/outputs/tech/HowDoesCdWork/01_structure.txt";
 
+const SP_00 = "/outputs/tech/SystemProgramming/00_ReadMe.txt";
+
 const loadTextFile = async (path) => {
   if (textCache.has(path)) {
     return textCache.get(path);
@@ -34,8 +36,11 @@ const loadTextFile = async (path) => {
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
 const getContactOutput = () => loadTextFile(contactPath);
+
 const getHDCDWOutput_00 = () => loadTextFile(HDCDW_00);
 const getHDCDWOutput_01 = () => loadTextFile(HDCDW_01);
+
+const getSPOutput_00 = () => loadTextFile(SP_00);
 
 const lsOutput_home = [
   "total 283",
@@ -52,11 +57,13 @@ const lsOutput_about = [
   '-rw-r--r--   3 ian  staff  3887 Jan 24 00:23 about.txt',
   '-rw-r--r--   3 ian  staff  3887 Jan 24 00:23 contact.txt'
 ].join("\n");
+
 const lsOutput_tech = [
   "total 382",
   'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
   'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
   'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 HowDoesCdWork/',
+  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 SystemProgramming/',
 ].join("\n");
 const lsOutput_HDCDW = [
   "total 330",
@@ -65,12 +72,19 @@ const lsOutput_HDCDW = [
   '-rw-r--r--   3 ian  staff   383 Jan 24 00:23 00_ReadMe.txt',
   '-rw-r--r--   3 ian  staff  1037 Jan 24 00:23 01_structure.txt'
 ].join("\n");
+const lsOutput_SP = [
+  "total 330",
+  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
+  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
+  '-rw-r--r--   3 ian  staff   383 Jan 24 00:23 00_ReadMe.txt'
+].join("\n");
 
 const dirEntries = {
   "~": ["about", "tech", "welcome.txt"],
   about: ["about.txt", "contact.txt"],
-  tech: ["HowDoesCdWork"],
-  HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
+  tech: ["HowDoesCdWork", "SystemProgramming"],
+  HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"],
+  SystemProgramming: ["00_ReadMe.txt"]
 };
 
 const isEditableTarget = (target) => {
@@ -269,6 +283,22 @@ const runCommand = async (command) => {
     }
     if (normalized === "cat 01_structure.txt") {
       return { output: await getHDCDWOutput_01(), asHtml: false };
+    }
+    if (normalized.startsWith("cd ")) {
+      if (normalized === "cd ..") {
+        currentDir = "tech";
+        return { output: "", asHtml: false };
+      }
+      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
+    }
+  }
+
+  if (currentDir === "SystemProgramming") {
+    if (normalized === "ll") {
+      return { output: lsOutput_SP, asHtml: false };
+    }
+    if (normalized === "cat 00_ReadMe.txt") {
+      return { output: await getSPOutput_00(), asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
       if (normalized === "cd ..") {
