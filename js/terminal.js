@@ -39,23 +39,31 @@ const getHDCDWOutput_01 = () => loadTextFile(HDCDW_01);
 
 const lsOutput_home = [
   "total 283",
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 about',
-  'drwxr--r-- ian staff 3887 Jan 24 00:23 tech',
-  "-rw-r--r-- ian staff  512 Jan 24 00:23 welcome.txt"
+  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
+  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
+  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 about',
+  'drwxr--r--   3 ian  staff  3887 Jan 24 00:23 tech',
+  "-rw-r--r--   3 ian  staff   512 Jan 24 00:23 welcome.txt"
 ].join("\n");
 const lsOutput_about = [
   "total 283",
-  '-rw-r--r-- ian staff 3887 Jan 24 00:23 about.txt',
-  '-rw-r--r-- ian staff 3887 Jan 24 00:23 contact.txt'
+  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
+  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
+  '-rw-r--r--   3 ian  staff  3887 Jan 24 00:23 about.txt',
+  '-rw-r--r--   3 ian  staff  3887 Jan 24 00:23 contact.txt'
 ].join("\n");
 const lsOutput_tech = [
   "total 382",
-  'drw-r--r-- ian staff 3887 Jan 24 00:23 HowDoesCdWork',
+  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
+  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
+  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 HowDoesCdWork',
 ].join("\n");
 const lsOutput_HDCDW = [
   "total 330",
-  '-rw-r--r-- ian staff 383  Jan 24 00:23 00_ReadMe.txt',
-  '-rw-r--r-- ian staff 1037 Jan 24 00:23 01_structure.txt'
+  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
+  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
+  '-rw-r--r--   3 ian  staff   383 Jan 24 00:23 00_ReadMe.txt',
+  '-rw-r--r--   3 ian  staff  1037 Jan 24 00:23 01_structure.txt'
 ].join("\n");
 
 const dirEntries = {
@@ -180,7 +188,7 @@ const runCommand = async (command) => {
     if (normalized === "cat welcome.txt") {
       return { output: await getWelcomeOutput(), asHtml: false };
     }
-    if (normalized === "ls -l") {
+    if (normalized === "ll") {
       return { output: lsOutput_home, asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
@@ -215,7 +223,7 @@ const runCommand = async (command) => {
     if (normalized === "cat contact.txt") {
       return { output: await getContactOutput(), asHtml: false };
     }
-    if (normalized === "ls -l") {
+    if (normalized === "ll") {
       return { output: lsOutput_about, asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
@@ -232,7 +240,7 @@ const runCommand = async (command) => {
 
 
   if (currentDir === "tech") {
-    if (normalized === "ls -l") {
+    if (normalized === "ll") {
       return { output: lsOutput_tech, asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
@@ -253,7 +261,7 @@ const runCommand = async (command) => {
 
 
   if (currentDir === "HowDoesCdWork") {
-    if (normalized === "ls -l") {
+    if (normalized === "ll") {
       return { output: lsOutput_HDCDW, asHtml: false };
     }
     if (normalized === "cat 00_ReadMe.txt") {
