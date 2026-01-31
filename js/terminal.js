@@ -266,6 +266,10 @@ const runCommand = async (command) => {
         currentDir = "HowDoesCdWork";
         return { output: "", asHtml: false };
       }
+     if (normalized === "cd SystemProgramming" || normalized === "cd SystemProgramming/") {
+        currentDir = "SystemProgramming";
+        return { output: "", asHtml: false };
+      }
       return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
     }
   }
