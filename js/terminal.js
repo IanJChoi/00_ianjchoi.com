@@ -41,8 +41,8 @@ const lsOutput_home = [
   "total 283",
   'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
   'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 about',
-  'drwxr--r--   3 ian  staff  3887 Jan 24 00:23 tech',
+  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 about/',
+  'drwxr--r--   3 ian  staff  3887 Jan 24 00:23 tech/',
   "-rw-r--r--   3 ian  staff   512 Jan 24 00:23 welcome.txt"
 ].join("\n");
 const lsOutput_about = [
@@ -56,7 +56,7 @@ const lsOutput_tech = [
   "total 382",
   'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
   'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 HowDoesCdWork',
+  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 HowDoesCdWork/',
 ].join("\n");
 const lsOutput_HDCDW = [
   "total 330",
