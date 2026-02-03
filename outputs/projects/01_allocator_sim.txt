@@ -1,0 +1,67 @@
+
++---------------------------------------------------------------------------------+
+|                                Allocator Simulator                              |
++---------------------------------------------------------------------------------+
+
+Allocator Simulator — Motivation and Design Story
+
+The source code for this project is publicly available on GitHub:
+https://github.com/IanJChoi/01_allocator_sim
+
+I built this allocator simulator while taking an Advanced Systems Programming course, where we studied heap allocation, virtual memory, and the internal design of malloc and free.
+
+Throughout the course, we discussed concepts such as the program break, the heap, virtual addresses, alignment, headers and footers, block splitting, and coalescing. While I understood these ideas at a conceptual level, I felt a persistent gap between understanding the rules and being able to intuitively reason about what actually happens in memory after each allocation or deallocation.
+
+For instance, I knew that calling malloc(14) does not allocate exactly 14 bytes.
+I understood that alignment requirements and metadata increase the block size.
+However, I found it difficult to immediately visualize:
+- how many bytes are truly reserved,
+- where the payload begins in virtual address space,
+- how the remaining free space is structured,
+- and how the overall heap layout evolves across a sequence of malloc and free calls.
+
+That gap in intuition became the main motivation for this project.
+
+Rather than relying on static diagrams or stepping through allocator code in a debugger,
+I wanted a tool that would explicitly show the heap layout after every operation.
+My goal was to observe allocator behavior directly and concretely, so that each malloc
+or free call would correspond to a visible and understandable transformation of memory.
+
+This simulator models a simplified but realistic implicit free-list allocator.
+It assumes a 64-bit system with 16-byte alignment and uses boundary tags
+(headers and footers) to manage block metadata.
+Each block consists of an 8-byte header, a payload, and an 8-byte footer.
+The heap begins with alignment padding and a prologue block, and ends with an epilogue
+header, closely following the allocator structure described in standard systems texts
+such as CS:APP.
+
+The heap itself is simulated in memory and extended in 4KB increments, analogous to how
+a real allocator would request additional memory from the operating system using sbrk.
+The primary design goal of this project is not performance, but clarity.
+After each operation, the simulator prints every block in the heap along with its virtual
+address, size, allocation status, and role (header, payload, or footer).
+
+Through this visualization, several allocator behaviors become immediately clear:
+- requested sizes being rounded up due to alignment,
+- free blocks being split during allocation,
+- adjacent free blocks being coalesced during deallocation,
+- and the role of prologue and epilogue blocks in simplifying boundary conditions.
+
+For example, calling malloc(931) makes it explicit why the allocator produces a 960-byte
+block, and freeing blocks in different orders demonstrates how coalescing restores larger
+contiguous free regions.
+These behaviors are often described abstractly, but seeing them reflected in concrete
+virtual addresses made the underlying design decisions far more intuitive to me.
+
+Working on this project fundamentally changed how I think about malloc and free.
+They are no longer opaque library calls, but carefully engineered mechanisms that maintain
+strong invariants over a continuously changing memory layout.
+Implementing and visualizing these mechanisms forced me to reason explicitly about those
+invariants and to confront edge cases that are easy to overlook when reading allocator
+implementations.
+
+This program is not intended to be a production-grade allocator.
+Instead, it is a learning tool built to make invisible memory behavior visible,
+and to bridge the gap between theoretical understanding and concrete systems behavior.
+
++---------------------------------------------------------------------------------+
