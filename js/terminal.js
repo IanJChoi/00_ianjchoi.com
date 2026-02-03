@@ -74,9 +74,9 @@ const lsOutput_blog = [
 'drwxr-xr-x@ 4 ian  staff   128 Jan 27 15:10 HowDoesCdWork/'
 ].join("\n");
 const lsOutput_projects = [
-'total 0',
-'drwxr-xr-x@ 2 ian  staff   64 Feb  2 21:34 ./',
-'drwxr-xr-x@ 7 ian  staff  224 Feb  2 21:34 ../',
+'total 16',
+'drwxr-xr-x@ 3 ian  staff    96 Feb  3 00:28 ./',
+'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
 '-rw-r--r--@ 1 ian  staff  4161 Feb  3 00:25 01_allocator_sim.txt'
 ].join("\n");
 
