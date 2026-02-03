@@ -4,12 +4,6 @@ let currentDir = "~";
 let currentInput = "";
 // Cache text file contents to avoid repeated fetches.
 const textCache = new Map();
-const welcomePath = "/outputs/welcome.txt";
-const aboutPath = "/outputs/about/about.txt";
-const contactPath = "/outputs/about/contact.txt";
-
-const HDCDW_00 = "/outputs/blog/HowDoesCdWork/00_ReadMe.txt";
-const HDCDW_01 = "/outputs/blog/HowDoesCdWork/01_structure.txt";
 
 const loadTextFile = async (path) => {
   if (textCache.has(path)) {
@@ -31,12 +25,31 @@ const loadTextFile = async (path) => {
   }
 };
 
+const dirEntries = {
+  "~": ["about/", "blog/", "projects/", "welcome.txt"],
+  about: ["about.txt", "contact.txt"],
+  blog: ["HowDoesCdWork/"],
+  projects: ["allocator_sim.txt"],
+  HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
+};
+
+const welcomePath = "/outputs/welcome.txt";
+const aboutPath = "/outputs/about/about.txt";
+const contactPath = "/outputs/about/contact.txt";
+
+const HDCDW_00 = "/outputs/blog/HowDoesCdWork/00_ReadMe.txt";
+const HDCDW_01 = "/outputs/blog/HowDoesCdWork/01_structure.txt";
+
+const PRO_01 = "/outputs/projects/00_allocator_sim.txt";
+
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
 const getContactOutput = () => loadTextFile(contactPath);
 
 const getHDCDWOutput_00 = () => loadTextFile(HDCDW_00);
 const getHDCDWOutput_01 = () => loadTextFile(HDCDW_01);
+
+const getPROOutput_01 = () => loadTextFile(PRO_01);
 
 const lsOutput_home = [
 'total 24',
@@ -63,7 +76,8 @@ const lsOutput_blog = [
 const lsOutput_projects = [
 'total 0',
 'drwxr-xr-x@ 2 ian  staff   64 Feb  2 21:34 ./',
-'drwxr-xr-x@ 7 ian  staff  224 Feb  2 21:34 ../'
+'drwxr-xr-x@ 7 ian  staff  224 Feb  2 21:34 ../',
+'-rw-r--r--@ 1 ian  staff  4161 Feb  3 00:25 01_allocator_sim.txt'
 ].join("\n");
 
 const lsOutput_HDCDW = [
@@ -73,14 +87,6 @@ const lsOutput_HDCDW = [
 '-rw-r--r--@ 1 ian  staff  1450 Jan 28 00:07 00_ReadMe.txt',
 '-rw-r--r--@ 1 ian  staff  7142 Jan 31 15:11 01_structure.txt'
 ].join("\n");
-
-const dirEntries = {
-  "~": ["about/", "blog/", "projects/", "welcome.txt"],
-  about: ["about.txt", "contact.txt"],
-  blog: ["HowDoesCdWork/"],
-  projects: [],
-  HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
-};
 
 const isEditableTarget = (target) => {
   if (!target) return false;
@@ -262,6 +268,9 @@ const runCommand = async (command) => {
   if (currentDir === "projects") {
     if (normalized === "ll") {
       return { output: lsOutput_projects, asHtml: false };
+    }
+    if (normalized === "cat 01_allocator_sim.txt") {
+      return { output: await getPROOutput_01(), asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
       if (normalized === "cd ..") {
