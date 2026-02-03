@@ -29,7 +29,7 @@ const dirEntries = {
   "~": ["about/", "blog/", "projects/", "welcome.txt"],
   about: ["about.txt", "contact.txt"],
   blog: ["HowDoesCdWork/"],
-  projects: ["allocator_sim.txt"],
+  projects: ["01_allocator_sim.txt"],
   HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
 };
 
