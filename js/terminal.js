@@ -40,7 +40,7 @@ const contactPath = "/outputs/about/contact.txt";
 const HDCDW_00 = "/outputs/blog/HowDoesCdWork/00_ReadMe.txt";
 const HDCDW_01 = "/outputs/blog/HowDoesCdWork/01_structure.txt";
 
-const PRO_01 = "/outputs/projects/00_allocator_sim.txt";
+const PRO_01 = "/outputs/projects/01_allocator_sim.txt";
 
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
