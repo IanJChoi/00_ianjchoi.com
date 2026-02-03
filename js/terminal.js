@@ -4,14 +4,12 @@ let currentDir = "~";
 let currentInput = "";
 // Cache text file contents to avoid repeated fetches.
 const textCache = new Map();
-const welcomePath = "/outputs/home/welcome.txt";
+const welcomePath = "/outputs/welcome.txt";
 const aboutPath = "/outputs/about/about.txt";
 const contactPath = "/outputs/about/contact.txt";
 
-const HDCDW_00 = "/outputs/tech/HowDoesCdWork/00_ReadMe.txt";
-const HDCDW_01 = "/outputs/tech/HowDoesCdWork/01_structure.txt";
-
-const SP_00 = "/outputs/tech/SystemProgramming/00_ReadMe.txt";
+const HDCDW_00 = "/outputs/blog/HowDoesCdWork/00_ReadMe.txt";
+const HDCDW_01 = "/outputs/blog/HowDoesCdWork/01_structure.txt";
 
 const loadTextFile = async (path) => {
   if (textCache.has(path)) {
@@ -40,51 +38,48 @@ const getContactOutput = () => loadTextFile(contactPath);
 const getHDCDWOutput_00 = () => loadTextFile(HDCDW_00);
 const getHDCDWOutput_01 = () => loadTextFile(HDCDW_01);
 
-const getSPOutput_00 = () => loadTextFile(SP_00);
-
 const lsOutput_home = [
-  "total 283",
-  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
-  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 about/',
-  'drwxr--r--   3 ian  staff  3887 Jan 24 00:23 tech/',
-  "-rw-r--r--   3 ian  staff   512 Jan 24 00:23 welcome.txt"
+'total 24',
+'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ./',
+'drwxr-xr-x@ 9 ian  staff   288 Jan 27 14:55 ../',
+'drwxr-xr-x  4 ian  staff   128 Jan 25 09:31 about/',
+'drwxr-xr-x@ 4 ian  staff   128 Feb  2 21:36 blog/',
+'drwxr-xr-x@ 2 ian  staff    64 Feb  2 21:34 projects/',
+'-rw-r--r--@ 1 ian  staff   423 Jan 26 23:08 welcome.txt'
 ].join("\n");
 const lsOutput_about = [
-  "total 283",
-  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
-  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  '-rw-r--r--   3 ian  staff  3887 Jan 24 00:23 about.txt',
-  '-rw-r--r--   3 ian  staff  3887 Jan 24 00:23 contact.txt'
+'total 16',
+'drwxr-xr-x  4 ian  staff   128 Jan 25 09:31 ./',
+'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
+'-rw-r--r--@ 1 ian  staff  1482 Jan 31 15:11 about.txt',
+'-rw-r--r--@ 1 ian  staff   432 Jan 31 15:11 contact.txt'
+].join("\n");
+const lsOutput_blog = [
+'total 16',
+'drwxr-xr-x@ 4 ian  staff   128 Feb  2 21:36 ./',
+'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
+'drwxr-xr-x@ 4 ian  staff   128 Jan 27 15:10 HowDoesCdWork/'
+].join("\n");
+const lsOutput_projects = [
+'total 0',
+'drwxr-xr-x@ 2 ian  staff   64 Feb  2 21:34 ./',
+'drwxr-xr-x@ 7 ian  staff  224 Feb  2 21:34 ../'
 ].join("\n");
 
-const lsOutput_tech = [
-  "total 382",
-  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
-  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 HowDoesCdWork/',
-  'drw-r--r--   4 ian  staff  3887 Jan 24 00:23 SystemProgramming/',
-].join("\n");
 const lsOutput_HDCDW = [
-  "total 330",
-  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
-  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  '-rw-r--r--   3 ian  staff   383 Jan 24 00:23 00_ReadMe.txt',
-  '-rw-r--r--   3 ian  staff  1037 Jan 24 00:23 01_structure.txt'
-].join("\n");
-const lsOutput_SP = [
-  "total 330",
-  'drwxr-xr-x@  9 ian  staff   288 Jan 27 14:55 ./',
-  'drwxr-xr-x   5 ian  staff   160 Jan 22 10:46 ../',
-  '-rw-r--r--   3 ian  staff   383 Jan 24 00:23 00_ReadMe.txt'
+'total 24',
+'drwxr-xr-x@ 4 ian  staff   128 Jan 27 15:10 ./',
+'drwxr-xr-x@ 4 ian  staff   128 Feb  2 21:36 ../',
+'-rw-r--r--@ 1 ian  staff  1450 Jan 28 00:07 00_ReadMe.txt',
+'-rw-r--r--@ 1 ian  staff  7142 Jan 31 15:11 01_structure.txt'
 ].join("\n");
 
 const dirEntries = {
-  "~": ["about", "tech", "welcome.txt"],
+  "~": ["about", "blog", "projects", "welcome.txt"],
   about: ["about.txt", "contact.txt"],
-  tech: ["HowDoesCdWork", "SystemProgramming"],
-  HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"],
-  SystemProgramming: ["00_ReadMe.txt"]
+  blog: ["HowDoesCdWork"],
+  projects: [],
+  HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
 };
 
 const isEditableTarget = (target) => {
@@ -194,10 +189,6 @@ const runCommand = async (command) => {
   }
 
 
-
-
-
-
   if (currentDir === "~") {
     if (normalized === "cat welcome.txt") {
       return { output: await getWelcomeOutput(), asHtml: false };
@@ -214,8 +205,12 @@ const runCommand = async (command) => {
         currentDir = "about";
         return { output: "", asHtml: false };
       }
-      if (normalized === "cd tech" || normalized === "cd tech/") {
-        currentDir = "tech";
+      if (normalized === "cd blog" || normalized === "cd blog/") {
+        currentDir = "blog";
+        return { output: "", asHtml: false };
+      }
+      if (normalized === "cd projects" || normalized === "cd projects/") {
+        currentDir = "projects";
         return { output: "", asHtml: false };
       }
       if (normalized === "cd welcome.txt") {
@@ -224,10 +219,6 @@ const runCommand = async (command) => {
       return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
     }
   }
-
-
-
-
 
 
   if (currentDir === "about") {
@@ -250,12 +241,9 @@ const runCommand = async (command) => {
   }
 
 
-
-
-
-  if (currentDir === "tech") {
+  if (currentDir === "blog") {
     if (normalized === "ll") {
-      return { output: lsOutput_tech, asHtml: false };
+      return { output: lsOutput_blog, asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
       if (normalized === "cd ..") {
@@ -266,16 +254,23 @@ const runCommand = async (command) => {
         currentDir = "HowDoesCdWork";
         return { output: "", asHtml: false };
       }
-     if (normalized === "cd SystemProgramming" || normalized === "cd SystemProgramming/") {
-        currentDir = "SystemProgramming";
-        return { output: "", asHtml: false };
-      }
       return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
     }
   }
 
 
-
+  if (currentDir === "projects") {
+    if (normalized === "ll") {
+      return { output: lsOutput_projects, asHtml: false };
+    }
+    if (normalized.startsWith("cd ")) {
+      if (normalized === "cd ..") {
+        currentDir = "~";
+        return { output: "", asHtml: false };
+      }
+      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
+    }
+  }
 
 
   if (currentDir === "HowDoesCdWork") {
@@ -297,21 +292,6 @@ const runCommand = async (command) => {
     }
   }
 
-  if (currentDir === "SystemProgramming") {
-    if (normalized === "ll") {
-      return { output: lsOutput_SP, asHtml: false };
-    }
-    if (normalized === "cat 00_ReadMe.txt") {
-      return { output: await getSPOutput_00(), asHtml: false };
-    }
-    if (normalized.startsWith("cd ")) {
-      if (normalized === "cd ..") {
-        currentDir = "tech";
-        return { output: "", asHtml: false };
-      }
-      return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
-    }
-  }
 
   if (normalized.length > 0) {
     return { output: `zsh: command not found: ${normalized}`, asHtml: false };
