@@ -75,9 +75,9 @@ const lsOutput_HDCDW = [
 ].join("\n");
 
 const dirEntries = {
-  "~": ["about/", "blog/", "projects/", "welcome.txt"],
+  "~": ["about", "blog", "projects", "welcome.txt"],
   about: ["about.txt", "contact.txt"],
-  blog: ["HowDoesCdWork/"],
+  blog: ["HowDoesCdWork"],
   projects: [],
   HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
 };
@@ -147,6 +147,8 @@ const getCommonPrefix = (values) => {
   return prefix;
 };
 
+const isDirectoryEntry = (entry) => Boolean(dirEntries[entry]);
+
 const handleAutocomplete = () => {
   const trimmed = currentInput.replace(/\s+$/, "");
   const lastSpaceIndex = trimmed.lastIndexOf(" ");
@@ -158,7 +160,9 @@ const handleAutocomplete = () => {
   const matches = getAutocompleteMatches(currentInput);
   if (!matches.length) return;
   if (matches.length === 1) {
-    currentInput = `${base}${matches[0]}`;
+    const match = matches[0];
+    const suffix = isDirectoryEntry(match) ? `${match}/` : match;
+    currentInput = `${base}${suffix}`;
     renderInput();
     syncMobileInput();
     return;
