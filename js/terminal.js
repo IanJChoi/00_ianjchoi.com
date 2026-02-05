@@ -57,8 +57,8 @@ const lsOutput_home = [
 'drwxr-xr-x@ 9 ian  staff   288 Jan 27 14:55 ../',
 'drwxr-xr-x  4 ian  staff   128 Jan 25 09:31 about/',
 'drwxr-xr-x@ 4 ian  staff   128 Feb  2 21:36 blog/',
-'drwxr-xr-x@ 2 ian  staff    64 Feb  2 21:34 projects/',
-'-rw-r--r--@ 1 ian  staff   423 Jan 26 23:08 welcome.txt'
+'drwxr-xr-x@ 2 ian  staff    96 Feb  2 21:34 projects/',
+'-rw-r--r--@ 1 ian  staff   865 Feb  5 23:08 welcome.txt'
 ].join("\n");
 const lsOutput_about = [
 'total 16',
