@@ -47,7 +47,6 @@ INDUSTRY EXPERIENCE
 --------------------------------
 Amazon — Software Development Engineer Intern
 May 2025 – Jul 2025 | New York, NY
-
 • Built scalable backend services in production environments.
 • Optimized system performance and latency.
 • Collaborated with cross-functional engineering teams.
@@ -76,8 +75,8 @@ National Team Swimmer — South Korea
 
 LEADERSHIP & ACTIVITIES
 --------------------------------
+Republic of Korea Army
+Audio/Visual Operations Specialist & Squad Leader
+
 Korean Students Association (KCSA)
 Campus Ministry Leader
-
-Columbia Christian Fellowship
-Worship & Outreach Coordinator
