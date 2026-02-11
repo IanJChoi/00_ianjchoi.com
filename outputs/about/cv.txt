@@ -1,0 +1,114 @@
+==============================
+Ian J. Choi
+New York, NY, USA
+Email: workhard2464@gmail.com
+Phone: +1-XXX-XXX-XXXX
+LinkedIn: linkedin.com/in/ianjchoi
+GitHub: github.com/IanJChoi
+Website: ianjchoi.com
+==============================
+
+
+EDUCATION
+--------------------------------
+Columbia University — School of General Studies
+Bachelor of Science in Computer Science, Minor in Mathematics
+Expected Graduation: May 2026
+GPA: X.XX / 4.00
+
+Relevant Coursework:
+Advanced Systems Programming
+Operating Systems
+Computer Architecture
+Linear Algebra
+Probability & Statistics
+
+
+RESEARCH INTERESTS
+--------------------------------
+AI Inference Systems
+GPU–Storage I/O Pipelines
+High-Performance Computing
+Distributed Systems
+Systems Performance Engineering
+
+
+RESEARCH EXPERIENCE
+--------------------------------
+AI Inference Systems Research — Independent
+Jan 2025 – Present
+
+• Designed a minimal LLM inference engine supporting PyTorch and ONNX backends.
+• Benchmarked latency vs throughput across CPU and GPU environments.
+• Implemented dynamic batching and token streaming pipelines.
+• Profiled GPU I/O bottlenecks in real-time inference workloads.
+
+
+PROJECTS
+--------------------------------
+Minimal LLM Inference Engine
+• Built a systems-first inference engine from scratch.
+• Implemented tokenizer, batcher, and execution backends.
+• Benchmarked performance across Torch and ONNX Runtime.
+
+Memory Allocator Simulator
+• Developed a C-based heap allocator with 16-byte alignment.
+• Simulated sbrk heap growth and fragmentation behavior.
+• Visualized header/footer memory layouts.
+
+GPU I/O Path Benchmark
+• Compared mmap, async prefetch, and baseline I/O pipelines.
+• Measured cache locality and disk-GPU throughput tradeoffs.
+
+
+INDUSTRY EXPERIENCE
+--------------------------------
+Amazon — Software Development Engineer Intern
+May 2025 – Jul 2025 | New York, NY
+
+• Built scalable backend services in production environments.
+• Optimized system performance and latency.
+• Collaborated with cross-functional engineering teams.
+
+
+PUBLICATIONS / PAPERS
+--------------------------------
+Choi, Ian J.
+“Optimizing GPU I/O Pipelines for LLM Inference.”
+In Preparation.
+
+
+PRESENTATIONS
+--------------------------------
+“Systems Bottlenecks in AI Inference.”
+Columbia University Research Showcase, 2025.
+
+
+TECHNICAL SKILLS
+--------------------------------
+Languages:
+Python, C/C++, Swift, JavaScript
+
+Systems & Infra:
+Linux, macOS, Memory Management, Profiling
+
+AI / ML:
+PyTorch, ONNX Runtime, TensorRT
+
+Tools:
+Docker, Git, CUDA, Nsight, Perf
+
+
+HONORS & AWARDS
+--------------------------------
+Columbia GS Dean’s List — 2024
+National Team Swimmer — South Korea
+
+
+LEADERSHIP & ACTIVITIES
+--------------------------------
+Korean Students Association (KCSA)
+Campus Ministry Leader
+
+Columbia Christian Fellowship
+Worship & Outreach Coordinator

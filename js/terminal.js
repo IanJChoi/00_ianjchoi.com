@@ -27,7 +27,7 @@ const loadTextFile = async (path) => {
 
 const dirEntries = {
   "~": ["about/", "blog/", "projects/", "welcome.txt"],
-  about: ["about.txt", "contact.txt"],
+  about: ["about.txt", "contact.txt", "cv.txt"],
   blog: ["HowDoesCdWork/"],
   projects: ["01_allocator_sim.txt"],
   HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
@@ -36,6 +36,7 @@ const dirEntries = {
 const welcomePath = "/outputs/welcome.txt";
 const aboutPath = "/outputs/about/about.txt";
 const contactPath = "/outputs/about/contact.txt";
+const cvPath = "/outputs/about/cv.txt";
 
 const HDCDW_00 = "/outputs/blog/HowDoesCdWork/00_ReadMe.txt";
 const HDCDW_01 = "/outputs/blog/HowDoesCdWork/01_structure.txt";
@@ -45,6 +46,7 @@ const PRO_01 = "/outputs/projects/01_allocator_sim.txt";
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
 const getContactOutput = () => loadTextFile(contactPath);
+const getCVOutput = () => loadTextFile(cvPath);
 
 const getHDCDWOutput_00 = () => loadTextFile(HDCDW_00);
 const getHDCDWOutput_01 = () => loadTextFile(HDCDW_01);
@@ -55,17 +57,18 @@ const lsOutput_home = [
 'total 24',
 'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ./',
 'drwxr-xr-x@ 9 ian  staff   288 Jan 27 14:55 ../',
-'drwxr-xr-x  4 ian  staff   128 Jan 25 09:31 about/',
+'drwxr-xr-x  5 ian  staff   160 Feb 11 09:06 about/',
 'drwxr-xr-x@ 4 ian  staff   128 Feb  2 21:36 blog/',
-'drwxr-xr-x@ 2 ian  staff    96 Feb  2 21:34 projects/',
-'-rw-r--r--@ 1 ian  staff   865 Feb  5 23:08 welcome.txt'
+'drwxr-xr-x@ 3 ian  staff    96 Feb  3 00:28 projects/',
+'-rw-r--r--@ 1 ian  staff   423 Feb 11 09:05 welcome.txt'
 ].join("\n");
 const lsOutput_about = [
-'total 16',
-'drwxr-xr-x  4 ian  staff   128 Jan 25 09:31 ./',
+'total 24',
+'drwxr-xr-x  5 ian  staff   160 Feb 11 09:06 ./',
 'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
 '-rw-r--r--@ 1 ian  staff  1482 Jan 31 15:11 about.txt',
-'-rw-r--r--@ 1 ian  staff   432 Jan 31 15:11 contact.txt'
+'-rw-r--r--@ 1 ian  staff   432 Jan 31 15:11 contact.txt',
+'-rw-r--r--@ 1 ian  staff  2875 Feb 11 09:06 cv.txt'
 ].join("\n");
 const lsOutput_blog = [
 'total 16',
@@ -77,7 +80,7 @@ const lsOutput_projects = [
 'total 16',
 'drwxr-xr-x@ 3 ian  staff    96 Feb  3 00:28 ./',
 'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
-'-rw-r--r--@ 1 ian  staff  4161 Feb  3 00:25 01_allocator_sim.txt'
+'-rw-r--r--@ 1 ian  staff  4162 Feb  5 09:44 01_allocator_sim.txt'
 ].join("\n");
 
 const lsOutput_HDCDW = [
@@ -233,6 +236,9 @@ const runCommand = async (command) => {
     }
     if (normalized === "cat contact.txt") {
       return { output: await getContactOutput(), asHtml: false };
+    }
+    if (normalized === "cat cv.txt") {
+      return { output: await getCVOutput(), asHtml: false };
     }
     if (normalized === "ll") {
       return { output: lsOutput_about, asHtml: false };
