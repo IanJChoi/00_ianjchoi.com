@@ -1,27 +1,16 @@
-==============================
+
+================================
 Ian J. Choi
 New York, NY, USA
-Email: workhard2464@gmail.com
-Phone: +1-XXX-XXX-XXXX
 LinkedIn: linkedin.com/in/ianjchoi
-GitHub: github.com/IanJChoi
+GitHub: github.com/ianjchoi
 Website: ianjchoi.com
-==============================
-
+================================
 
 EDUCATION
 --------------------------------
-Columbia University — School of General Studies
+Columbia University
 Bachelor of Science in Computer Science, Minor in Mathematics
-Expected Graduation: May 2026
-GPA: X.XX / 4.00
-
-Relevant Coursework:
-Advanced Systems Programming
-Operating Systems
-Computer Architecture
-Linear Algebra
-Probability & Statistics
 
 
 RESEARCH INTERESTS
@@ -35,30 +24,23 @@ Systems Performance Engineering
 
 RESEARCH EXPERIENCE
 --------------------------------
-AI Inference Systems Research — Independent
-Jan 2025 – Present
+Allocator Simulator — Heap Memory Systems Study
+Jan 2026 | github.com/IanJChoi/01_allocator_sim
+• Built a pedagogical heap allocator to bridge theoretical memory management concepts with concrete virtual memory behavior.
+• Implemented an implicit free-list design following CS:APP allocator architecture.
+• Engineered boundary-tag metadata structures to track allocation status and block size.
+• Simulated program break expansion and heap extension in page-sized increments.
+• Produced detailed heap visualizations exposing allocation overhead and fragmentation dynamics.
+• Investigated allocator invariants and edge cases through controlled malloc/free sequences.
 
-• Designed a minimal LLM inference engine supporting PyTorch and ONNX backends.
-• Benchmarked latency vs throughput across CPU and GPU environments.
-• Implemented dynamic batching and token streaming pipelines.
-• Profiled GPU I/O bottlenecks in real-time inference workloads.
-
-
-PROJECTS
---------------------------------
-Minimal LLM Inference Engine
-• Built a systems-first inference engine from scratch.
-• Implemented tokenizer, batcher, and execution backends.
-• Benchmarked performance across Torch and ONNX Runtime.
-
-Memory Allocator Simulator
-• Developed a C-based heap allocator with 16-byte alignment.
-• Simulated sbrk heap growth and fragmentation behavior.
-• Visualized header/footer memory layouts.
-
-GPU I/O Path Benchmark
-• Compared mmap, async prefetch, and baseline I/O pipelines.
-• Measured cache locality and disk-GPU throughput tradeoffs.
+Multi-Level Cache Locality & Memory Access Benchmarking
+Feb 2026 | github.com/IanJChoi/02_cache_locality_benchmark
+• Engineered low-level C benchmarks to probe L1/L2/L3 cache latency and bandwidth characteristics.
+• Evaluated sequential, random, and chunked memory access patterns.
+• Quantified cache-miss penalties and throughput collapse beyond cache residency thresholds.
+• Studied cache-line fetching behavior and hardware prefetcher interactions.
+• Analyzed memory hierarchy bottlenecks affecting systems and AI inference workloads.
+• Produced performance visualizations correlating access stride with latency scaling.
 
 
 INDUSTRY EXPERIENCE
@@ -69,19 +51,6 @@ May 2025 – Jul 2025 | New York, NY
 • Built scalable backend services in production environments.
 • Optimized system performance and latency.
 • Collaborated with cross-functional engineering teams.
-
-
-PUBLICATIONS / PAPERS
---------------------------------
-Choi, Ian J.
-“Optimizing GPU I/O Pipelines for LLM Inference.”
-In Preparation.
-
-
-PRESENTATIONS
---------------------------------
-“Systems Bottlenecks in AI Inference.”
-Columbia University Research Showcase, 2025.
 
 
 TECHNICAL SKILLS
@@ -101,7 +70,7 @@ Docker, Git, CUDA, Nsight, Perf
 
 HONORS & AWARDS
 --------------------------------
-Columbia GS Dean’s List — 2024
+Columbia GS Dean’s List — 2025
 National Team Swimmer — South Korea
 
 
