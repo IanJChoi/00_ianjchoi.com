@@ -8,15 +8,6 @@ Cache Locality Benchmark — Motivation and Design Story
 The source code for this project is publicly available on GitHub:
 https://github.com/IanJChoi/02_cache_locality_benchmark
 
-+---------------------------------------------------------------------------------+
-|                           Cache Locality Benchmark                              |
-+---------------------------------------------------------------------------------+
-
-Cache Locality Benchmark — Motivation and Design Story
-
-The source code for this project is publicly available on GitHub:
-https://github.com/IanJChoi/02_cache_locality_benchmark
-
 I built this cache locality benchmark while studying computer architecture and systems
 programming, where I developed a conceptual understanding of how the cache hierarchy
 operates — specifically the roles of L1, L2, and L3 caches in bridging the latency gap
