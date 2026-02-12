@@ -63,5 +63,4 @@ implementations.
 This program is not intended to be a production-grade allocator.
 Instead, it is a learning tool built to make invisible memory behavior visible,
 and to bridge the gap between theoretical understanding and concrete systems behavior.
-
 +---------------------------------------------------------------------------------+

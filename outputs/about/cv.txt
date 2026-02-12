@@ -33,14 +33,12 @@ Jan 2026 | github.com/IanJChoi/01_allocator_sim
 • Produced detailed heap visualizations exposing allocation overhead and fragmentation dynamics.
 • Investigated allocator invariants and edge cases through controlled malloc/free sequences.
 
-Multi-Level Cache Locality & Memory Access Benchmarking
+Cache_Locality_Benchmark - Multi-Level Cache Locality & Memory Access Benchmarking
 Feb 2026 | github.com/IanJChoi/02_cache_locality_benchmark
-• Engineered low-level C benchmarks to probe L1/L2/L3 cache latency and bandwidth characteristics.
-• Evaluated sequential, random, and chunked memory access patterns.
-• Quantified cache-miss penalties and throughput collapse beyond cache residency thresholds.
-• Studied cache-line fetching behavior and hardware prefetcher interactions.
-• Analyzed memory hierarchy bottlenecks affecting systems and AI inference workloads.
-• Produced performance visualizations correlating access stride with latency scaling.
+• Engineered low-level C benchmarks to probe latency and bandwidth behavior across the L1/L2/L3 cache hierarchy.
+• Benchmarked sequential full-array scans vs per-element reuse on 32MB datasets exceeding cache capacity.
+• Implemented cache-eviction sweeps and volatile load paths to ensure measurement integrity.
+• Analyzed cache-line (64B) fetch behavior and its impact on memory bandwidth utilization.
 
 
 INDUSTRY EXPERIENCE

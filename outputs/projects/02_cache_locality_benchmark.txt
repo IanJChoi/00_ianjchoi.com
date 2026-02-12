@@ -1,0 +1,164 @@
+
++---------------------------------------------------------------------------------+
+|                           Cache Locality Benchmark                              |
++---------------------------------------------------------------------------------+
+
+Cache Locality Benchmark — Motivation and Design Story
+
+The source code for this project is publicly available on GitHub:
+https://github.com/IanJChoi/02_cache_locality_benchmark
+
++---------------------------------------------------------------------------------+
+|                           Cache Locality Benchmark                              |
++---------------------------------------------------------------------------------+
+
+Cache Locality Benchmark — Motivation and Design Story
+
+The source code for this project is publicly available on GitHub:
+https://github.com/IanJChoi/02_cache_locality_benchmark
+
+I built this cache locality benchmark while studying computer architecture and systems
+programming, where I developed a conceptual understanding of how the cache hierarchy
+operates — specifically the roles of L1, L2, and L3 caches in bridging the latency gap
+between the CPU and DRAM.
+
+I learned that modern CPUs do not read data directly from main memory whenever a load
+instruction is issued. Instead, memory accesses flow through a hierarchy of caches,
+each designed to keep recently accessed data physically closer to the processor.
+
+Understanding this hierarchy revealed an important realization.
+
+If a programmer understands how caches behave, they can write code that utilizes the CPU
+far more efficiently — not by changing algorithms, but by changing how memory is accessed.
+
+However, I wanted to go beyond theoretical understanding.
+
+I wanted to observe how cache behavior actually manifests in real programs.
+
+Several cache properties stood out to me.
+
+Data is transferred from DRAM in cache-line units rather than byte-by-byte.
+On my machine, each cache line is 64 bytes.
+Recently accessed data can evict older data as cache sets fill.
+Access order determines whether data remains in cache or is forced back to memory.
+
+These properties correspond to two fundamental principles:
+
+- Spatial locality — nearby data is fetched together.
+- Temporal locality — recently used data is likely to be reused.
+
+While I understood these principles abstractly, I wanted to see:
+
+- how much performance difference locality actually creates,
+- whether loop structure alone could change runtime,
+- and how eviction and cache-line reuse manifest in measurable execution time.
+
+This curiosity became the main motivation for this benchmark.
+
+Rather than relying solely on architectural diagrams or theoretical discussions,
+I designed an experiment that intentionally programs around cache behavior when reading
+data from DRAM.
+
+The experiment focuses on two core facts:
+
+1. Recently accessed cache lines can evict older ones.
+2. Each memory fetch brings in 64 bytes at once.
+
+By structuring loops to either exploit or ignore these properties, I aimed to observe how
+spatial and temporal locality influence runtime performance.
+
+The benchmark operates on a 32MB byte array — large enough to exceed all cache levels and
+ensure frequent DRAM interaction.
+
+Each element in the array is read 10,000 times, but the ordering of those reads differs
+between two methods.
+
+The total arithmetic work remains identical.
+Only the memory access pattern changes.
+
+This isolates cache locality as the primary performance variable.
+
+The first method scans the entire array sequentially and repeats that full scan 10,000
+times.
+
+Conceptually:
+
+for (int r = 0; r < REPEAT_COUNT; r++) {
+    for (size_t i = 0; i < ARRAY_SIZE; i++) {
+        sum += array[i];
+    }
+}
+
+In this pattern, each sweep continuously loads new cache lines while previously loaded
+lines are evicted before they can be reused.
+
+Temporal locality is weak, and the working set constantly overflows L1, L2, and L3 caches.
+Effectively, this behaves like repeated cold scans of memory.
+
+The second method repeatedly reads each element 10,000 times before advancing to the next
+element.
+
+Conceptually:
+
+for (size_t i = 0; i < ARRAY_SIZE; i++) {
+    for (int r = 0; r < REPEAT_COUNT; r++) {
+        sum += array[i];
+    }
+}
+
+Here, the first read fetches a 64-byte cache line, and subsequent reads reuse that same
+line repeatedly.
+
+Temporal locality is maximized, cache eviction occurs far less frequently, and data
+remains resident in upper cache levels for longer durations.
+
+Because cache lines are 64 bytes, accessing array[i] implicitly loads neighboring bytes
+array[i] through array[i+63].
+
+Method B benefits from this spatial locality implicitly, while Method A wastes most of
+each fetched line before eviction.
+
+This demonstrates that memory bandwidth — not arithmetic — dominates runtime performance
+in memory-intensive workloads.
+
+To ensure that measurements reflect steady-state cache behavior rather than residual
+initialization effects, the benchmark includes an eviction phase prior to timing.
+
+A 256MB eviction buffer is swept in 64-byte strides so that each access touches a new
+cache line. A volatile sink variable prevents the compiler from optimizing away this
+loop.
+
+Similarly, measured loads occur through volatile pointers to ensure repeated reads are
+not collapsed into optimized expressions.
+
+Through this experimental setup, several cache behaviors become immediately observable:
+
+- sequential scans causing continuous cache-line eviction,
+- repeated per-element accesses maximizing cache reuse,
+- working sets exceeding cache capacity spilling into lower cache levels,
+- and the performance cost of DRAM reloads.
+
+These behaviors are often described abstractly in architecture courses, but seeing them
+reflected in concrete execution time made the hardware implications far more intuitive.
+
+Working on this project fundamentally changed how I think about performance optimization.
+
+Before this project, I primarily associated optimization with algorithmic complexity,
+instruction counts, and compiler behavior.
+
+After implementing and measuring these access patterns, I began to see performance as a
+dialogue between software and hardware.
+
+Memory is not flat.
+Access order is not neutral.
+
+Two programs performing identical arithmetic work can diverge significantly in runtime
+purely due to how they traverse memory.
+
+Understanding cache hierarchy — L1, L2, and L3 — enables programmers to write code that
+cooperates with hardware rather than fighting against it.
+
+This project was built to make those invisible hardware interactions visible and
+measurable, and to bridge the gap between theoretical cache models and real execution
+behavior.
++---------------------------------------------------------------------------------+

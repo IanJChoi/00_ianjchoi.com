@@ -29,7 +29,7 @@ const dirEntries = {
   "~": ["about/", "blog/", "projects/", "welcome.txt"],
   about: ["about.txt", "contact.txt", "cv.txt"],
   blog: ["HowDoesCdWork/"],
-  projects: ["01_allocator_sim.txt"],
+  projects: ["01_allocator_sim.txt", "02_cache_locality_benchmark.txt"],
   HowDoesCdWork: ["00_ReadMe.txt", "01_structure.txt"]
 };
 
@@ -42,6 +42,7 @@ const HDCDW_00 = "/outputs/blog/HowDoesCdWork/00_ReadMe.txt";
 const HDCDW_01 = "/outputs/blog/HowDoesCdWork/01_structure.txt";
 
 const PRO_01 = "/outputs/projects/01_allocator_sim.txt";
+const PRO_02 = "/outputs/projects/02_cache_locality_benchmark.txt";
 
 const getWelcomeOutput = () => loadTextFile(welcomePath);
 const getAboutOutput = () => loadTextFile(aboutPath);
@@ -52,6 +53,7 @@ const getHDCDWOutput_00 = () => loadTextFile(HDCDW_00);
 const getHDCDWOutput_01 = () => loadTextFile(HDCDW_01);
 
 const getPROOutput_01 = () => loadTextFile(PRO_01);
+const getPROOutput_02 = () => loadTextFile(PRO_02);
 
 const lsOutput_home = [
 'total 24',
@@ -59,7 +61,7 @@ const lsOutput_home = [
 'drwxr-xr-x@ 9 ian  staff   288 Jan 27 14:55 ../',
 'drwxr-xr-x  5 ian  staff   160 Feb 11 09:06 about/',
 'drwxr-xr-x@ 4 ian  staff   128 Feb  2 21:36 blog/',
-'drwxr-xr-x@ 3 ian  staff    96 Feb  3 00:28 projects/',
+'drwxr-xr-x@ 4 ian  staff   128 Feb 12 01:02 projects/',
 '-rw-r--r--@ 1 ian  staff   423 Feb 11 09:05 welcome.txt'
 ].join("\n");
 const lsOutput_about = [
@@ -68,7 +70,7 @@ const lsOutput_about = [
 'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
 '-rw-r--r--@ 1 ian  staff  1482 Jan 31 15:11 about.txt',
 '-rw-r--r--@ 1 ian  staff   432 Jan 31 15:11 contact.txt',
-'-rw-r--r--@ 1 ian  staff  2875 Feb 11 09:06 cv.txt'
+'-rw-r--r--@ 1 ian  staff  2640 Feb 12 01:17 cv.txt'
 ].join("\n");
 const lsOutput_blog = [
 'total 16',
@@ -77,10 +79,11 @@ const lsOutput_blog = [
 'drwxr-xr-x@ 4 ian  staff   128 Jan 27 15:10 HowDoesCdWork/'
 ].join("\n");
 const lsOutput_projects = [
-'total 16',
-'drwxr-xr-x@ 3 ian  staff    96 Feb  3 00:28 ./',
+'total 32',
+'drwxr-xr-x@ 4 ian  staff   128 Feb 12 01:02 ./',
 'drwxr-xr-x@ 7 ian  staff   224 Feb  2 21:34 ../',
-'-rw-r--r--@ 1 ian  staff  4162 Feb  5 09:44 01_allocator_sim.txt'
+'-rw-r--r--@ 1 ian  staff  4161 Feb 12 01:13 01_allocator_sim.txt',
+'-rw-r--r--@ 1 ian  staff  6776 Feb 12 01:13 02_cache_locality_benchmark.txt'
 ].join("\n");
 
 const lsOutput_HDCDW = [
@@ -277,6 +280,9 @@ const runCommand = async (command) => {
     }
     if (normalized === "cat 01_allocator_sim.txt") {
       return { output: await getPROOutput_01(), asHtml: false };
+    }    
+    if (normalized === "cat 02_cache_locality_benchmark.txt") {
+      return { output: await getPROOutput_02(), asHtml: false };
     }
     if (normalized.startsWith("cd ")) {
       if (normalized === "cd ..") {
