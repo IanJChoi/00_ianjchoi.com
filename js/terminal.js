@@ -306,7 +306,7 @@ const runCommand = async (command) => {
     }
     if (normalized.startsWith("cd ")) {
       if (normalized === "cd ..") {
-        currentDir = "tech";
+        currentDir = "blog";
         return { output: "", asHtml: false };
       }
       return { output: `cd: no such file or directory: ${normalized.slice(3)}`, asHtml: false };
