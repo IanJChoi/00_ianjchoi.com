@@ -6,9 +6,7 @@
 Hi, I’m Ian J. Choi.
 I’m a senior at Columbia University majoring in Computer Science with a minor in Mathematics.
 
-I built FYBCL (For Your Better College Life) — an app that helps students quickly check dining hall menus, library hours, campus events, etc, so they can spend less time clicking around and avoid walking all the way to the dining hall or library just to realize it’s closed.
-
-Technically, I’m deeply interested in low-level computing such as operating systems and system programming. I enjoy understanding how things actually work under the hood — memory, processes, I/O, latency — and I’m actively studying and building projects in this space.
+As a career, I’m deeply interested in low-level computing, particularly operating systems and systems programming. I’m fascinated by how software interacts with hardware — how memory is allocated and accessed, how processes are scheduled, how I/O flows through the system, and where latency actually emerges. Rather than treating these as abstract concepts, I enjoy breaking them down through hands-on exploration — building allocators, benchmarking cache behavior, and studying performance at the level of memory access patterns and system calls. I’m actively developing projects in this space to better understand the tradeoffs that shape real-world system performance.
 
 Before computers, there was swimming.
 I’ve been swimming since I was 4, competed as a member of the South Korean national team, and later swam for a Division I team in college. These days, swimming is more of a passion than a profession, and I spend most of my training time on CrossFit and HYROX — still chasing performance, just in different arenas.
